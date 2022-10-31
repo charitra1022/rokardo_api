@@ -7,15 +7,12 @@ from bs4 import BeautifulSoup
 from .request_handler import http_request
 
 
-def scrap_artist_art(artist: str):
+def _scrap_first_image(url: str):
     """
-    Scraps Google image search and returns image link for an artist accurately by artist name
-    :param artist: Name of artist
-    :return: Link to image of cover art
+    Scraps Google image search and returns first image link for desired search terms
+    :param url: Link to scrap
+    :return: link to image
     """
-    # example query string-> ed+sheeran
-    query = f"{artist.replace(' ', '+')}"
-    url = f"https://www.google.co.in/search?q={query}&hl=en&tbm=isch"
 
     # fetch the url data and convert to bs4 object
     r = http_request(url=url)
@@ -29,10 +26,22 @@ def scrap_artist_art(artist: str):
 
     # images_src = []
     for image in image_tags:
-        img_url = image.attrs.get("data-src")     # get the data-src attribute of the img tag
+        img_url = image.attrs.get("data-src")  # get the data-src attribute of the img tag
         if img_url is not None and 'http' in img_url:
             # images_src.append(x)
             # return a link that is valid openable image
             return img_url
 
     return ''
+
+
+def scrap_artist_art(artist: str):
+    """
+    Scraps Google image search and returns image link for an artist accurately by artist name
+    :param artist: Name of artist
+    :return: Link to image of cover art
+    """
+    # example query string-> ed+sheeran
+    query = f"{artist.replace(' ', '+')}"
+    url = f"https://www.google.co.in/search?q={query}&hl=en&tbm=isch"
+    return _scrap_first_image(url)
