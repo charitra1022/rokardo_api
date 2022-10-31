@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}
+    Rokardo
+{% endblock page_title %}
+
+{% block page_body %}
+    <div>
+        <h2>Search song</h2>
+        <form action="api/song/search" method="get">
+            <input type="text" name="q" id="song_search" autofocus>
+            <input type="submit" id="submit">
+        </form>
+    </div>
+    <div>
+        <h2>Top Artists</h2>
+        <a href="api/artist/top/">Get</a>
+    </div>
+{% endblock page_body %}
