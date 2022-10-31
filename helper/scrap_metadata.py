@@ -45,3 +45,16 @@ def scrap_artist_art(artist: str):
     query = f"{artist.replace(' ', '+')}"
     url = f"https://www.google.co.in/search?q={query}&hl=en&tbm=isch"
     return _scrap_first_image(url)
+
+
+def scrap_cover_art(song: str, artist: str):
+    """
+    Scraps Google image search and returns image link for a song accurately based on song name and artist name
+    :param song: Name of song
+    :param artist: Name of artist
+    :return: Link to image of cover art
+    """
+    # example query string-> shape+of+you+ed+sheeran+cover+art
+    query = f"{song.replace(' ', '+')}+{artist.replace(' ', '+')}+cover+art"
+    url = f"https://www.google.co.in/search?q={query}&hl=en&tbm=isch"
+    return _scrap_first_image(url)
