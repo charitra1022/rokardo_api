@@ -17,8 +17,9 @@ class SearchSong(APIView):
         """
 
         query = request.GET.get('q').lower()  # get the search string
-        data = process_songs_data(get_track_list_by_search(query))
+        # data = process_songs_data(get_track_list_by_search(query))
+        data = process_songs_data(get_track_list_by_search(query, limit=5))
 
-        print(data)
+
 
         return Response(data, status=status.HTTP_302_FOUND)

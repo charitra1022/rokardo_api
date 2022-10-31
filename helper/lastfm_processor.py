@@ -35,33 +35,71 @@ def process_artists_data(topItems):
     return processed_data
 
 
+# def get_data_from_track(track):
+#     """
+#     Returns relevant data from pylast.Track object
+#     :param track: pylast.Track object
+#     :return: dict of relevant data
+#     """
+#     data = {
+#         'name': track.get_name(),
+#         # 'duration': track.get_duration(),
+#         'artist': track.get_artist().get_name(),
+#         # 'image': track.get_cover_image(size=pylast.SIZE_MEDIUM),
+#         'playcount': track.get_playcount(),
+#     }
+#     data['image'] = scrap_cover_art(song=data['name'], artist=data['artist'])
+#     return data
+#
+#
+# def process_songs_data(tracks):
+#     """
+#     Accepts the raw list of songs returned by LastFM API, and returns list of processed data
+#     :param tracks: list(pylast.Track) received form the LastFM API call
+#     :return: list of dict containing processed data
+#     """
+#
+#     processed_data = []
+#
+#     for t in tracks:
+#         processed_data.append(get_data_from_track(t))
+#
+#     return processed_data
+
+
 def get_data_from_track(track):
     """
-    Returns relevant data from pylast.Track object
-    :param track: pylast.Track object
-    :return: dict of relevant data
+    Returns dict of required track details from fetched LastFM API track details
+    :param track: Track detail fetched from LastFM API
+    :return: Dictionary of required track details
     """
+
     data = {
-        'name': track.get_name(),
-        # 'duration': track.get_duration(),
-        'artist': track.get_artist().get_name(),
-        # 'image': track.get_cover_image(size=pylast.SIZE_MEDIUM),
-        'playcount': track.get_playcount(),
+        'name': track['name'],
+        'artist': track['artist'],
+        # 'url': track['url'],
+        'listeners': track['listeners'],
+        # 'image': track['image'][1]['#text'],
     }
     data['image'] = scrap_cover_art(song=data['name'], artist=data['artist'])
     return data
 
 
-def process_songs_data(tracks):
+def process_songs_data(response):
     """
-    Accepts the raw list of songs returned by LastFM API, and returns list of processed data
-    :param tracks: list(pylast.Track) received form the LastFM API call
+    Accepts the response from LastFM API and returns list of processed song data
+    :param response: response from the LastFM API call
     :return: list of dict containing processed data
     """
 
-    processed_data = []
+    # List of LastFM based formatted tracks
+    tracks = response.json()['results']['trackmatches']['track']
 
-    for t in tracks:
-        processed_data.append(get_data_from_track(t))
+    # filtered data based on requirement
+    processed_data = []
+    for track in tracks:
+        detail = get_data_from_track(track)
+        # detail['url'] = get_youtubelink_from_song_artist(song=detail['name'], artist=detail['artist'])
+        processed_data.append(detail)
 
     return processed_data
