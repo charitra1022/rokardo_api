@@ -2,6 +2,7 @@
 
 # third-party imports
 from bs4 import BeautifulSoup
+from youtube_search import YoutubeSearch
 
 # custom packages
 from .request_handler import http_request
@@ -58,3 +59,30 @@ def scrap_cover_art(song: str, artist: str):
     query = f"{song.replace(' ', '+')}+{artist.replace(' ', '+')}+cover+art"
     url = f"https://www.google.co.in/search?q={query}&hl=en&tbm=isch"
     return _scrap_first_image(url)
+
+
+def get_youtubelink_from_song_artist(song, artist):
+    """
+    Retrieves YouTube link for a song accurately by searching by song name and artist name
+    :param song: Name of song
+    :param artist: Name of artist
+    :return: Link to YouTube link for the video
+    """
+
+    # get search results from YouTube using song name and artist
+    search_results = YoutubeSearch(f"{song} {artist}", max_results=2).to_dict()
+    videoID = search_results[0]['id']
+
+    # Links for YouTube video
+    youtube_player = 'https://www.youtube-nocookie.com/embed/{id}?autoplay=1&controls=0&disablekb=1&enablejsapi=1&iv_load_policy=3&vq=low'
+    youtube_player = 'https://www.youtube.com/embed/{id}'
+    youtube_player = 'https://www.youtube.com/v/VIDEO_ID?playlist=VIDEO_ID&autoplay=1&rel=0'
+    youtube_player = 'https://www.youtube.com/watch?v={id}'
+
+    # Get required data from the result dict
+    # data = {
+    #     'name': search_results[0]['title'],
+    #     'link': youtube_player.format(id=search_results[0]['id'])
+    # }
+
+    return youtube_player.format(id=videoID)

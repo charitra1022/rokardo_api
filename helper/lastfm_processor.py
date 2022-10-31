@@ -2,6 +2,7 @@
 
 from .scrap_metadata import scrap_artist_art
 from .scrap_metadata import scrap_cover_art
+from .scrap_metadata import get_youtubelink_from_song_artist
 
 
 def get_data_from_artist(artist):
@@ -82,6 +83,7 @@ def get_data_from_track(track):
         # 'image': track['image'][1]['#text'],
     }
     data['image'] = scrap_cover_art(song=data['name'], artist=data['artist'])
+    data['url'] = get_youtubelink_from_song_artist(song=data['name'], artist=data['artist'])
     return data
 
 
@@ -98,8 +100,6 @@ def process_songs_data(response):
     # filtered data based on requirement
     processed_data = []
     for track in tracks:
-        detail = get_data_from_track(track)
-        # detail['url'] = get_youtubelink_from_song_artist(song=detail['name'], artist=detail['artist'])
-        processed_data.append(detail)
+        processed_data.append(get_data_from_track(track))
 
     return processed_data
