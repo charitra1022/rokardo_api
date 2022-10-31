@@ -17,3 +17,16 @@ def initialize_lastfm():
     )
 
     return network
+
+
+def get_top_artists(limit=10):
+    """
+    Returns a list of top artists streaming on LastFM
+    :param limit: Number of artists to return. Default 10
+    :return: list of pylast.TopItem(pylast.Artist) object
+    """
+    
+    network = initialize_lastfm()
+    artists = network.get_top_artists(limit=limit)
+    return artists
+    
