@@ -29,4 +29,17 @@ def get_top_artists(limit=10):
     network = initialize_lastfm()
     artists = network.get_top_artists(limit=limit)
     return artists
+
+
+def get_track_list_by_search(query):
+    """
+    Searches for a song and returns list of matching tracks
+    :param query: Song name query
+    :return: list(pylast.Track)
+    """
+
+    network = initialize_lastfm()
+    songs = network.search_for_track(artist_name='', track_name=query).get_next_page()
+    return songs
+
     
