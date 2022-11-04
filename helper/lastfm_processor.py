@@ -47,21 +47,21 @@ def process_top_artists_data(topItems):
     return processed_data
 
 
-# def get_data_from_track(track):
-#     """
-#     Returns relevant data from pylast.Track object
-#     :param track: pylast.Track object
-#     :return: dict of relevant data
-#     """
-#     data = {
-#         'name': track.get_name(),
-#         # 'duration': track.get_duration(),
-#         'artist': track.get_artist().get_name(),
-#         # 'image': track.get_cover_image(size=pylast.SIZE_MEDIUM),
-#         'playcount': track.get_playcount(),
-#     }
-#     data['image'] = scrap_cover_art(song=data['name'], artist=data['artist'])
-#     return data
+def get_data_from_track_object(track):
+    """
+    Returns relevant data from pylast.Track object
+    :param track: pylast.Track object
+    :return: dict of relevant data
+    """
+    data = {
+        'name': track.get_name(),
+        # 'duration': track.get_duration(),
+        'artist': track.get_artist().get_name(),
+        # 'image': track.get_cover_image(size=pylast.SIZE_MEDIUM),
+        'playcount': track.get_playcount(),
+    }
+    data['image'] = scrap_cover_art(song=data['name'], artist=data['artist'])
+    return data
 #
 #
 # def process_songs_data(tracks):
@@ -112,5 +112,21 @@ def process_songs_data(response):
     processed_data = []
     for track in tracks:
         processed_data.append(get_data_from_track(track))
+
+    return processed_data
+
+
+def process_top_tracks_data(topItems):
+    """
+
+    :param topItems:
+    :return:
+    """
+
+    processed_data = []
+
+    for i in get_item_from_topItem(topItems):
+        data = get_data_from_track_object(i)
+        processed_data.append(data)
 
     return processed_data
