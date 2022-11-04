@@ -21,7 +21,7 @@ def get_data_from_artist(artist):
     return data
 
 
-def process_artists_data(topItems):
+def process_top_artists_data(topItems):
     """
     Accepts the list of raw data returned by the LastFM API, and returns list of processed data
     :param topItems: list(TopItem) received from the LastFM API call
