@@ -74,3 +74,14 @@ def get_artist_by_mbid(mbid: str):
     network = initialize_lastfm()
     artist = network.get_artist_by_mbid(mbid)
     return artist
+
+
+def get_artist_top_albums(artist, limit=5):
+    """
+    Returns list of top albums of the given artist
+    :param limit: Number of tracks to return. Default is 5
+    :param artist: pylast.Artist object
+    :return: list of top albums of the artist
+    """
+    tracks = artist.get_top_tracks(limit=limit)
+    return tracks
