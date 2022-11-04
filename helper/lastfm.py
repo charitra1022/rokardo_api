@@ -63,3 +63,14 @@ def get_track_list_by_search(query, limit=5):
     }
 
     return http_request(url=API_URL, params=params)
+
+
+def get_artist_by_mbid(mbid: str):
+    """
+    Returns pylast.Artist object by artist mbid
+    :param mbid: mbid of the Artist to be searched
+    :return: pylast.Artist object with respective mbid
+    """
+    network = initialize_lastfm()
+    artist = network.get_artist_by_mbid(mbid)
+    return artist
