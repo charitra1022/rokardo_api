@@ -17,4 +17,13 @@
         <h2>Top Artists</h2>
         <a href="api/artist/top/">Get</a>
     </div>
+
+    <div>
+        <br/>
+        <h2>Get Artist by MBID</h2>
+        <form action="api/artist/page" method="get">
+            <input type="text" name="artist_mbid" id="artist_id">
+            <input type="submit" id="submit">
+        </form>
+    </div>
 {% endblock page_body %}
