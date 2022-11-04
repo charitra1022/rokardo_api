@@ -5,6 +5,17 @@ from .scrap_metadata import scrap_cover_art
 from .scrap_metadata import get_youtubelink_from_song_artist
 
 
+def get_item_from_topItem(topItems):
+    """
+    Accepts the list of TopItem objects returned by the LastFM API, and returns list of extracted item
+    :param topItems: list(TopItem) received from the LastFM API call
+    :return: list of items that constitute TopItem
+    """
+
+    processed_data = [i.item for i in topItems]
+    return processed_data
+
+
 def get_data_from_artist(artist):
     """
     Returns relevant data from pylast.Artist object
@@ -30,8 +41,8 @@ def process_top_artists_data(topItems):
 
     processed_data = []
 
-    for i in topItems:
-        processed_data.append(get_data_from_artist(i.item))
+    for i in get_item_from_topItem(topItems):
+        processed_data.append(get_data_from_artist(i))
 
     return processed_data
 
